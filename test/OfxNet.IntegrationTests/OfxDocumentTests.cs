@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
+[ExcludeFromCodeCoverage]
 public class OfxDocumentTests
 {
     public static IEnumerable<object[]> SampleOfxFiles
@@ -84,7 +85,7 @@ public class OfxDocumentTests
             .GetStatements();
 
         OfxStatement statement = actual.First();
-        Assert.IsInstanceOfType(statement, typeof(OfxBankStatement));
+        Assert.IsInstanceOfType<OfxBankStatement>(statement);
         var bankStatement = statement as OfxBankStatement;
         Assert.IsNotNull(bankStatement);
         Assert.IsNotNull(bankStatement.Account);
@@ -108,7 +109,7 @@ public class OfxDocumentTests
             .GetStatements();
 
         OfxStatement statement = actual.First();
-        Assert.IsInstanceOfType(statement, typeof(OfxBankStatement));
+        Assert.IsInstanceOfType<OfxBankStatement>(statement);
         var bankStatement = statement as OfxBankStatement;
         Assert.IsNotNull(bankStatement);
         Assert.IsNotNull(bankStatement.Account);
@@ -131,7 +132,7 @@ public class OfxDocumentTests
             .GetStatements();
 
         OfxStatement statement = actual.First();
-        Assert.IsInstanceOfType(statement, typeof(OfxBankStatement));
+        Assert.IsInstanceOfType<OfxBankStatement>(statement);
         var bankStatement = statement as OfxBankStatement;
         Assert.IsNotNull(bankStatement);
         Assert.IsNotNull(bankStatement.Account);
