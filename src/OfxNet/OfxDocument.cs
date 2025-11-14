@@ -6,6 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using OfxNet.Investments;
+using OfxNet.Investments.Securities;
 
 public class OfxDocument
 {
@@ -346,6 +348,58 @@ public class OfxDocument
         }
 
         return result;
+    }
+
+    // TODO: XMLDOCS
+    public IEnumerable<OfxInvestmentStatement> GetInvestmentStatements()
+    {
+        IOfxElement? set = this.GetRoot()?.TryGetElement(OfxInvestmentElementConstants.InvestmentStatementMessageSetResponseV1Element, this.Settings);
+        if (set is null)
+        {
+            yield break;
+        }
+
+        IEnumerable<IOfxElement> responses = set.TryEnumeratElements(OfxInvestmentElementConstants.InvestmentStatementTransactionResponseElement, this.Settings);
+
+        foreach (IOfxElement response in responses)
+        {
+            IOfxElement? statementElement = response.TryGetElement(OfxInvestmentElementConstants.InvestmentStatementResponseElement, this.Settings);
+            if (statementElement != null)
+            {
+                yield return new OfxInvestmentStatement(statementElement, this.Settings);
+            }
+        }
+    }
+
+    // TODO: XMLDOCS
+    public OfxInvestmentStatement? GetInvestmentStatement(IOfxElement? element)
+    {
+        return (element is null)
+            ? null
+            : new OfxInvestmentStatement(element, this.Settings);
+    }
+
+    // TODO: XMLDOCS
+    public IEnumerable<OfxSecurity> GetSecurities()
+    {
+        IOfxElement? response = this.GetRoot()?.TryGetElement(OfxInvestmentElementConstants.SecurityListMessagetResponseElementV1, this.Settings);
+
+        if (response is null)
+        {
+            yield break;
+        }
+
+        IOfxElement? list = response.TryGetElement(OfxInvestmentElementConstants.SecurityListElement, this.Settings);
+
+        if (list is not null)
+        {
+            OfxSecurityList securityList = new OfxSecurityList(list, this.Settings);
+
+            foreach (var security in securityList.Securities)
+            {
+                yield return security;
+            }
+        }
     }
 
     private int GetAsRequiredInteger(IOfxElement parent, string name, string errorString)
