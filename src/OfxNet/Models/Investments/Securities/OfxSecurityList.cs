@@ -37,7 +37,7 @@ public class OfxSecurityList
     {
         ArgumentNullException.ThrowIfNull(element);
 
-        foreach (var securityElement in element.Elements(SecurityElements, settings.TagComparer))
+        foreach (var securityElement in element.TryEnumeratElements(SecurityElements, settings))
         {
             switch (securityElement.Name.ToUpperInvariant())
             {

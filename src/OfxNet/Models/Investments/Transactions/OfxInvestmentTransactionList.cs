@@ -54,7 +54,7 @@ public class OfxInvestmentTransactionList
         List<OfxInvestmentTransaction> transactions = [];
         this.InvestmentTransactions = transactions;
 
-        foreach (var tranactionElement in element.Elements(TransactionTypeElements, settings.TagComparer))
+        foreach (var tranactionElement in element.TryEnumeratElements(TransactionTypeElements, settings))
         {
             switch (tranactionElement.Name.ToUpperInvariant())
             {

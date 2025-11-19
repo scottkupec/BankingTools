@@ -135,17 +135,26 @@ public static class IOfxElementExtensions
     /// <param name="parent">The parent <see cref="IOfxElement"/> containing the child element.</param>
     /// <param name="name">The name of the child elements to retrieve.</param>
     /// <param name="settings">The <see cref="OfxDocumentSettings"/> that control parsing behavior.</param>
-    /// <returns>An enumeration of the requested child elements. An empty enumeration is returned if no such child elements exists.</returns>
+    /// <returns>An enumeration of the requested child elements. An empty enumeration is returned if no such child elements exist.</returns>
     /// <exception cref="ArgumentNullException">Thrown if the parent element provided is null.</exception>
     public static IEnumerable<IOfxElement> TryEnumeratElements(this IOfxElement parent, string name, OfxDocumentSettings settings)
     {
         ArgumentNullException.ThrowIfNull(parent);
+        return parent.Elements(name, settings.TagComparer);
+    }
 
-        IEnumerable<IOfxElement> items = parent.Elements(name, settings.TagComparer);
-        foreach (IOfxElement item in items)
-        {
-            yield return item;
-        }
+    /// <summary>
+    /// Attempts to retrieve an enumeration of child <see cref="IOfxElement"/> elements with the specified names.
+    /// </summary>
+    /// <param name="parent">The parent <see cref="IOfxElement"/> containing the child element.</param>
+    /// <param name="names">The names of the child elements to retrieve.</param>
+    /// <param name="settings">The <see cref="OfxDocumentSettings"/> that control parsing behavior.</param>
+    /// <returns>An enumeration of the requested child elements. An empty enumeration is returned if no such child elements exist.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if the parent element provided is null.</exception>
+    public static IEnumerable<IOfxElement> TryEnumeratElements(this IOfxElement parent, string[] names, OfxDocumentSettings settings)
+    {
+        ArgumentNullException.ThrowIfNull(parent);
+        return parent.Elements(names, settings.TagComparer);
     }
 
     /// <summary>

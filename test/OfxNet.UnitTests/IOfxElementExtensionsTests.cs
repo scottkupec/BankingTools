@@ -276,6 +276,38 @@ public class IOfxElementExtensionsTests
     }
 
     [TestMethod]
+    public void TryEnumerateElementsReturnsElementsWithAnyName()
+    {
+        string[] elementsToFind = ["element1", "element2"];
+
+        SgmlElement element = new("Base", "<Base>");
+
+        foreach (var child in elementsToFind)
+        {
+            element.AddChild(
+                new SgmlElement(
+                    name: child,
+                    text: string.Empty,
+                    value: $"Child named {child}",
+                    parent: element));
+        }
+
+        element.AddChild(
+            new SgmlElement(
+                name: "some other child name",
+                text: string.Empty,
+                value: "element should not be in return count",
+                parent: element));
+
+        IEnumerable<IOfxElement> actual = element.TryEnumeratElements(elementsToFind, OfxDocumentSettings.Default);
+
+        Assert.AreEqual(
+            elementsToFind.Length,
+            actual.Count(),
+            $"{elementsToFind.Length} child elements should be returned.");
+    }
+
+    [TestMethod]
     public void TryGetDateTimeOffsetReturnsNullIfChildElementMissing()
     {
         SgmlElement element = new("Base", "<Base>");

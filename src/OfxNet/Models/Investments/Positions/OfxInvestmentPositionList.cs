@@ -35,7 +35,7 @@ public class OfxInvestmentPositionList
     {
         ArgumentNullException.ThrowIfNull(element);
 
-        foreach (var posElement in element.Elements(PositionElements, settings.TagComparer))
+        foreach (var posElement in element.TryEnumeratElements(PositionElements, settings))
         {
             switch (posElement.Name.ToUpperInvariant())
             {

@@ -359,7 +359,7 @@ public class OfxDocument
             yield break;
         }
 
-        IEnumerable<IOfxElement> responses = set.TryEnumeratElements(OfxInvestmentElementConstants.InvestmentStatementTransactionResponseElement, this.Settings);
+        IEnumerable<IOfxElement> responses = set.Elements(OfxInvestmentElementConstants.InvestmentStatementTransactionResponseElement, this.Settings.TagComparer);
 
         foreach (IOfxElement response in responses)
         {
