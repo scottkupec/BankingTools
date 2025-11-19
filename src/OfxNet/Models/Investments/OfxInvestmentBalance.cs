@@ -1,5 +1,8 @@
 ﻿namespace OfxNet.Investments;
 
+using System;
+using System.Collections.Generic;
+
 /// <summary>
 /// Represents investment account balances (<c>INVBAL</c> aggregate).
 /// </summary>
@@ -7,6 +10,13 @@
 // <!ELEMENT BALLIST  - - (BAL*) > is inlined.
 public class OfxInvestmentBalance
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OfxInvestmentBalance"/> class.
+    /// </summary>
+    public OfxInvestmentBalance()
+    {
+    }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="OfxInvestmentBalance"/> class
     /// by parsing the <c>INVBAL</c> aggregate.
