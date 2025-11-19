@@ -1,7 +1,6 @@
 ﻿namespace OfxNet.Investments;
 
 using OfxNet.Investments.Positions;
-using OfxNet.Investments.Securities;
 using OfxNet.Investments.Transactions;
 
 /// <summary>

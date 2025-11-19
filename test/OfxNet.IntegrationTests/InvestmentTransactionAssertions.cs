@@ -2,7 +2,6 @@ namespace OfxNet.IntegrationTests;
 
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OfxNet.Investments;
 using OfxNet.Investments.Transactions;
 
 [ExcludeFromCodeCoverage]
