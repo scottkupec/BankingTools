@@ -13,7 +13,7 @@ public static class IOfxElementExtensions
     /// <param name="parent">The parent <see cref="IOfxElement"/> containing the child element.</param>
     /// <param name="name">The name of the child element to retrieve.</param>
     /// <param name="settings">The <see cref="OfxDocumentSettings"/> that control parsing behavior.</param>
-    /// <returns>The <see cref="DateTimeOffset"/> of the requested child element, or <c>null</c> if the element does not exist.</returns>
+    /// <returns>The <see cref="DateTimeOffset"/> of the requested child element.</returns>
     /// <exception cref="ArgumentNullException">Thrown if the parent element provided is null.</exception>
     /// <exception cref="OfxException">Thrown if the requested child element does not exist or cannot be parsed as a <see cref="DateTimeOffset"/>.</exception>
     public static DateTimeOffset GetDateTimeOffset(this IOfxElement parent, string name, OfxDocumentSettings settings)
@@ -66,7 +66,7 @@ public static class IOfxElementExtensions
     /// <param name="parent">The parent <see cref="IOfxElement"/> containing the child element.</param>
     /// <param name="name">The name of the child element to retrieve.</param>
     /// <param name="settings">The <see cref="OfxDocumentSettings"/> that control parsing behavior.</param>
-    /// <returns>The requested child element or <c>null</c> if no such child exists.</returns>
+    /// <returns>The requested child element.</returns>
     /// <exception cref="ArgumentNullException">Thrown if the parent element provided is null.</exception>
     /// <exception cref="OfxException">Thrown if the requested child element is not present.</exception>
     public static IOfxElement GetElement(this IOfxElement parent, string name, OfxDocumentSettings settings)
