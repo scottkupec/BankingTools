@@ -350,7 +350,14 @@ public class OfxDocument
         return result;
     }
 
-    // TODO: XMLDOCS
+    /// <summary>Enumerates all investment statements in the current document.</summary>
+    /// <returns>
+    /// An enumeration of <see cref="OfxInvestmentStatement"/>s. Returns an empty enumeration if
+    /// no investment statements are present in the document.
+    /// </returns>
+    /// <exception cref="OfxException">
+    /// Thrown if any of the investment statements found could not be property processed.
+    /// </exception>
     public IEnumerable<OfxInvestmentStatement> GetInvestmentStatements()
     {
         IOfxElement? set = this.GetRoot()?.TryGetElement(OfxInvestmentElementConstants.InvestmentStatementMessageSetResponseV1Element, this.Settings);
@@ -371,15 +378,35 @@ public class OfxDocument
         }
     }
 
-    // TODO: XMLDOCS
-    public OfxInvestmentStatement? GetInvestmentStatement(IOfxElement? element)
+    /// <summary>Processes the provided <paramref name="element"/> as an investment statement.</summary>
+    /// <param name="element">The <see cref="IOfxElement"/> to be processed.</param>
+    /// <returns>The resulting <see cref="OfxInvestmentStatement"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if the provided <paramref name="element"/> is null.</exception>
+    /// <exception cref="OfxException">
+    /// Thrown if the <paramref name="element"/> could not be processed as a <see cref="OfxInvestmentStatement"/>. See
+    /// the inner exception for additional details.
+    /// </exception>
+    public OfxInvestmentStatement? GetInvestmentStatement(IOfxElement element)
     {
-        return (element is null)
-            ? null
-            : new OfxInvestmentStatement(element, this.Settings);
+        ArgumentNullException.ThrowIfNull(element);
+
+        try
+        {
+            return new OfxInvestmentStatement(element, this.Settings);
+        }
+        catch (Exception exception)
+        {
+            throw new OfxException(
+                $"Unable to process element '{element.Name}' as an investment statement.",
+                exception);
+        }
     }
 
-    // TODO: XMLDOCS
+    /// <summary>Gets the list of securities present in the document.</summary>
+    /// <returns>
+    /// An enumeration of <see cref="OfxSecurity"/> objects. Returns an empty enumeration if
+    /// no security information is present.
+    /// </returns>
     public IEnumerable<OfxSecurity> GetSecurities()
     {
         IOfxElement? response = this.GetRoot()?.TryGetElement(OfxInvestmentElementConstants.SecurityListMessagetResponseElementV1, this.Settings);
